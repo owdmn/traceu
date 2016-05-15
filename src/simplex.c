@@ -87,7 +87,7 @@ int internal(simplex *sp)
 void set_all_labels(simplex *sp)
 {
 	double tmp[sp->dim];
-	int i = 0;
+	int i;
 
 	for (int v = 0; v < sp->dim+2; v++)  {
 
@@ -95,6 +95,7 @@ void set_all_labels(simplex *sp)
 		for (int d = 0; d < sp->dim; d++)
 			tmp[d] = (*h[d])(sp->vertex[v]);
 
+		i = 0;
 		/* just count the consecutive positive results as a label */
 		while (tmp[i] < 0 && i < sp->dim)
 			i++;
