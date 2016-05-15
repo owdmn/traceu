@@ -61,9 +61,9 @@ int main(void)
 	/* create 10 dimensional simplex scaled by 0.005 with door_in = 0 */
 	simplex t = simplex_new(10, 0.0005, 0);
 
-	set_labels(&t);
+	set_all_labels(&t);
 	print_simplex(t);
 
-	trace(&t, 50); /* write out every 50th simplex */
+	trace(&t, 500); /* write out every 50th simplex */
 	return 0;
 }
