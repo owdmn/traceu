@@ -60,6 +60,7 @@ simplex simplex_new(int dim, double scale, int door_in)
 }
 
 
+/* Free all the memory associated with a simplex */
 void simplex_free(simplex *sp)
 {
 	for (int i = 0; i < sp->dim+2; i++)
