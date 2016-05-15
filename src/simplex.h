@@ -29,7 +29,8 @@ simplex simplex_new(int, double, int);
 void simplex_free(simplex *);
 
 int internal(simplex *);
-void set_labels(simplex *);
+void set_all_labels(simplex *);
+void set_labels(simplex *, int);
 void set_barycenter(simplex *);
 void set_door_out(simplex *);
 

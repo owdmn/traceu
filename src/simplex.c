@@ -51,7 +51,7 @@ simplex simplex_new(int dim, double scale, int door_in)
 
 	}
 
-	set_labels(&s);
+	set_all_labels(&s);
 	set_barycenter(&s);
 	s.door_in = door_in;
 	set_door_out(&s);
@@ -84,10 +84,10 @@ int internal(simplex *sp)
 
 
 /* Assign integer labels to a given simplex */
-void set_labels(simplex *sp)
+void set_all_labels(simplex *sp)
 {
 	double tmp[sp->dim];
-	int i;
+	int i = 0;
 
 	for (int v = 0; v < sp->dim+2; v++)  {
 
@@ -95,7 +95,6 @@ void set_labels(simplex *sp)
 		for (int d = 0; d < sp->dim; d++)
 			tmp[d] = (*h[d])(sp->vertex[v]);
 
-		i = 0;
 		/* just count the consecutive positive results as a label */
 		while (tmp[i] < 0 && i < sp->dim)
 			i++;
@@ -103,6 +102,22 @@ void set_labels(simplex *sp)
 		i++; /* add one b/c labeling starts at 1, not zero */
 		sp->label[v] = i;
 	}
+}
+
+/* Recalculate the label for a pivoted simplex */
+void set_label(simplex *sp, int v)
+{
+	double tmp[sp->dim];
+	int i = 0;
+
+	for (int d = 0; d < sp->dim; d++)
+		tmp[d] = (*h[d])(sp->vertex[v]);
+
+	while (tmp[i] < 0 && i < sp->dim)
+		i++;
+	i++;
+	sp->label[v] = i;
+
 }
 
 
@@ -214,7 +229,7 @@ simplex pivot(simplex s, int v)
 					- s.vertex[v][i] + s.vertex[v+1][i];
 		}
 	}
-	set_labels(&t);
+	set_label(&t, v);
 	set_barycenter(&t);
 	t.door_in = v;
 	set_door_out(&t);
