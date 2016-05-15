@@ -6,11 +6,9 @@
  *********************************************************/
 
 //################# Bonus Exercise #######################
-#define DIM 10
 #define SCALE 0.05
-//F(x,lambda) = x - lambda g(x)
-
-extern double (*h[DIM]) (double *x);
+//h(x,lambda) = x - lambda g(x)
+extern double (**h) (double *x); //*h[s.dim]
 
 static double h0 (double *x)
 {
@@ -55,8 +53,5 @@ static double h9 (double *x)
 {
 	return x[10] - x[0] * exp(cos( 10 * (x[1] + x[2] + x[3] + x[4] + x[5] + x[6] + x[7] + x[8] + x[9] + x[10]) ));
 }
-
-
-static const double offset[DIM + 1] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-static const double limits[DIM + 1][2] = {{0, 1}, {-100, 100}, {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100}};
-
+static const double offset[10 + 1] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+static const double limits[10 + 1][2] = {{0, 1}, {-100, 100}, {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100},  {-100, 100}};
