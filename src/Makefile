@@ -1,11 +1,11 @@
 CFLAGS = -std=gnu99 -Wall -Wextra -c -g
 
-all: tracker
+all: strace
 
-tracker: tracker.o simplex.o
+strace: strace.o simplex.o
 	$(CC) -o $@ $^ -lm
 
-tracker.o: tracker.c
+strace.o: strace.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 simplex.o: simplex.c
