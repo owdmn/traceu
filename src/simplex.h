@@ -19,13 +19,14 @@ typedef struct {
 	int			dim;
 	double		**vertex;		/* [DIM + 2][DIM + 1] */
 	double		*barycenter;	/* [DIM + 1] */
+	double		(*limits)[2];		/* [2][DIM + 1] */
 	int			*label;			/* [DIM + 2] */
 	int			door_in;
 	int			door_out;
 } simplex;
 
 
-simplex simplex_new(int, double, int);
+simplex simplex_new(int, double, int, double (*)[2]);
 void simplex_free(simplex *);
 
 int internal(simplex *);

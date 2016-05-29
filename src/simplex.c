@@ -1,14 +1,13 @@
-#include "simplex.h"
-#include "definitions.h"
+#include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <err.h>
+#include "simplex.h"
 
 double (**h) (double *x) = {0}; /* *h[dim] */
 
 
 /* Allocate and initialize a new vertex */
-simplex simplex_new(int dim, double scale, int door_in)
+simplex simplex_new(int dim, double scale, int door_in, double (*limits)[2])
 {
 	simplex s = {.dim = dim, .door_in = door_in};
 
@@ -31,8 +30,10 @@ simplex simplex_new(int dim, double scale, int door_in)
 	if (!s.label)
 		err(1, "malloc: label");
 
-	/* construction of a Kuhn-Freudenthal triangulation */
-	/* vertex[0] = (1,0,0,...,0) \in R^dim+1 */
+	/*
+	 *construction of a Kuhn-Freudenthal triangulation
+	 * vertex[0] = (1,0,0,...,0) \in R^dim+1
+	 */
 	s.vertex[0][0] = 1*scale;
 	for (int j = 1; j < dim+1; j++)
 		s.vertex[0][j] = 0;
@@ -49,6 +50,15 @@ simplex simplex_new(int dim, double scale, int door_in)
 				s.vertex[i][j] =  1*scale;
 		}
 
+	}
+
+	s.limits = malloc( (dim+1) * 2 * sizeof(double));
+	if (!s.limits)
+		err(1, "malloc: limits");
+
+	for (int i = 1; i < dim+1; i++) {
+		s.limits[MIN][i] = limits[MIN][i];
+		s.limits[MAX][i] = limits[MAX][i];
 	}
 
 	set_all_labels(&s);
@@ -68,6 +78,7 @@ void simplex_free(simplex *sp)
 	free(sp->vertex);
 	free(sp->barycenter);
 	free(sp->label);
+	free(sp->limits);
 }
 
 
@@ -75,8 +86,8 @@ void simplex_free(simplex *sp)
 int internal(simplex *sp)
 {
 	for (int c = 0; c < sp->dim+1; c++) {
-		if (sp->barycenter[c] < limits[c][MIN] ||
-			sp->barycenter[c] > limits[c][MAX]) {
+		if (sp->barycenter[c] < sp->limits[c][MIN] ||
+			sp->barycenter[c] > sp->limits[c][MAX]) {
 			return 0; /* abort if a vertex is out of bounds */
 		}
 	}
