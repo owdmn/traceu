@@ -135,7 +135,7 @@ void set_label(simplex *sp, int v)
 
 
 /* Set the barycenter as the component wise mean of the vertices */
-void set_barycenter(simplex *sp)
+inline void set_barycenter(simplex *sp)
 {
 	for (int c = 0; c < sp->dim+1; c++) { /* components */
 		sp->barycenter[c] = 0;

@@ -8,8 +8,8 @@
 
 bool barycenter_lt(simplex *sp) {
 
-	if (barycenter_norm(*sp) < 5)
-		return true;
+	if (barycenter_norm(*sp) < 1)
+	return true;
 	return false;
 }
 
@@ -33,15 +33,15 @@ int main(void)
     h[9] = h9;
 
 	double limits[10 + 1][2] = 	{{0, 1}, {-100, 100}, {-100, 100},  {-100, 100},
-								{-100, 100},  {-100, 100},  {-100, 100}, {-100, 100},
-								{-100, 100},  {-100, 100},  {-100, 100}};
+					{-100, 100},  {-100, 100},  {-100, 100}, {-100, 100},
+					{-100, 100},  {-100, 100},  {-100, 100}};
 
 
     /* create 10 dimensional simplex scaled by 0.005 with door_in = 0 */
     simplex t = simplex_new(10, 0.0005, 0, limits);
-	options o = { 500, &barycenter_lt };
+    options o = { 500, &barycenter_lt };
 
-	/* set the options for the tracer */
+    /* set the options for the tracer */
 
     set_all_labels(&t);
     print_simplex(t);

@@ -16,13 +16,13 @@
 #define MAX 1
 
 typedef struct {
-	int			dim;
+	int		dim;
 	double		**vertex;		/* [DIM + 2][DIM + 1] */
-	double		*barycenter;	/* [DIM + 1] */
+	double		*barycenter;		/* [DIM + 1] */
 	double		(*limits)[2];		/* [2][DIM + 1] */
-	int			*label;			/* [DIM + 2] */
-	int			door_in;
-	int			door_out;
+	int		*label;			/* [DIM + 2] */
+	int		door_in;
+	int		door_out;
 } simplex;
 
 

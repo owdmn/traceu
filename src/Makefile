@@ -15,6 +15,6 @@ simplex.o: simplex.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	-rm -f *.o strace
+	-rm -f *.o traceu 
 
 .PHONY: clean all
